@@ -1,0 +1,26 @@
+{
+  "name": "o365-filehandler-nodejs",
+  "version": "1.0.0",
+  "description": "This sample provides an example of how to implement an Office 365 file handler v2 as a single page JavaScript application.\r It leveraeges ADAL.JS to handle authentication and authorization with Azure Active Directory and Microsoft Graph.",
+  "main": "fh2-node.js",
+  "dependencies": {
+    "cookie-parser": "^1.4.3",
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "multer": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rgregg/o365-file-handler-single-page-js.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rgregg/o365-file-handler-single-page-js/issues"
+  },
+  "homepage": "https://github.com/rgregg/o365-file-handler-single-page-js#readme"
+}

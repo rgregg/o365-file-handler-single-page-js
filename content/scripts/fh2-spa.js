@@ -71,33 +71,33 @@
     function loadView(view) {
         var panel = document.getElementById("panel-body");
         var panelDefault = document.getElementById("panel-default");
-
         var cookieData = getCookie("fileHandlerActivation");
         var activationParameters = JSON.parse(cookieData);
 
         if (view == "preview")
         {
-            panel.innerText = "Preview!";
+            // Hide the command bar for preview view
+            var commandBar = document.getElementById("commandBar");
+            commandBar.style.display = "none";
+        }
+
+        if (view == "preview" || view == "open" || view == "newFile")
+        {
+            // panel.innerText = view;
             panelDefault.style.display = "none";
 
             // Launch the markdown previewer
-            loadFileFromMicrosoftGraph(activationParameters);
-        }
-        else if (view == "open")
-        {
-            panel.innerText = "Open!";
-            panelDefault.style.display = "none";
-
-            // Launch the markdown editor
-            loadFileFromMicrosoftGraph(activationParameters);
-        }
-        else if (view == "newfile")
-        {
-            panel.innerText = "NewFile!";
-            panelDefault.style.display = "none";
-
-            // Launch the markdown editor
-            loadFileFromMicrosoftGraph(activationParameters);
+            fetchFileFromMSGraph(activationParameters, view, function(view, text) {
+                if (view == "preview")
+                {
+                    loadTextInPreview(text);
+                }
+                else if (view == "open" || view == "newFile")
+                {
+                    loadTextInEditor(text);
+                }
+                finishedLoading();
+            });
         }
         else
         {
@@ -105,10 +105,9 @@
             panel.innerText = "";
             finishedLoading();
         }
-        
     }
 
-    function loadFileFromMicrosoftGraph(activationParameters)
+    function fetchFileFromMSGraph(activationParameters, view, callback)
     {
         var client = MicrosoftGraph.Client.init({
             authProvider: (done) => {
@@ -125,12 +124,33 @@
                 // remove custom headers since it causes CORS issues and isn't required
                 req.set('Authorization', null);
                 req.set('SdkVersion', null);
+                req.responseType('blob');
                 req.end((err, res)=>{
-                    var fileData = res.body;
-                    window.alert(fileData);
+                    var fileBlob = res.body;
+                    var reader = new FileReader();
+                    reader.onload = function() {
+                        var text = reader.result;
+                        callback(view, text);
+                    }
+                    reader.readAsText(fileBlob);
                 })
             });
         });
+    }
+
+    function loadTextInEditor(text) {
+
+        // enable editor commands in toolbar
+        let editorCommands = document.getElementById("editorActionButtons");
+        editorCommands.style.display = "initial";
+
+        let textArea = document.getElementById("markdownContent");
+        textArea.innerText = text;
+    }
+
+    function loadTextInPreview(text) {
+        let textArea = document.getElementById("markdownContent");
+        textArea.innerText = text;
     }
 
     function finishedLoading() {

@@ -8,24 +8,15 @@ app.use(cookieParser());
 app.use(express.static(__dirname + "/content"));
 
 app.post('/filehandler/open', function (req, res) {
-    console.log("Content-Type %s", req.headers["content-type"]);
-    console.log("POST data: %s", JSON.stringify(req.body));
-
-    switchToViewMode("open", res, req);
+    switchToViewMode("open", req, res);
 });
 
 app.post('/filehandler/preview', function (req, res) {
-    console.log("Content-Type %s", req.headers["content-type"]);
-    console.log("POST data: %s", JSON.stringify(req.body));
-
     switchToViewMode("preview", req, res);
 });
 
 app.post('/filehandler/newfile', function(req, res) {
-    console.log("Content-Type %s", req.headers["content-type"]);
-    console.log("POST data: %s", JSON.stringify(req.body));
-
-    switchToViewMode("newfile", res, req);
+    switchToViewMode("newfile", req, res);
 });
 
 var server = app.listen(9999, function () {
@@ -38,9 +29,11 @@ var server = app.listen(9999, function () {
 function switchToViewMode(mode, req, res)
 {
     console.log("Switching to view mode: %s", mode);
-    
+    console.log("Content-Type %s", req.headers["content-type"]);
+    console.log("POST data: %s", JSON.stringify(req.body));
+   
     // Convert the activation parameters into JSON
-    var params = convertActivationParameters(req);
+    var params = convertActivationParameters(req.body);
     console.log("activation params: %s", JSON.stringify(params));
 
     // Write the parameters out in the form of a cookie
@@ -55,14 +48,22 @@ function switchToViewMode(mode, req, res)
     res.end();
 }
 
-function convertActivationParameters(req) {
+function convertActivationParameters(postBody) {
+
+    if (postBody == undefined)
+    {
+        console.log("no activation parameters to convert...");
+        return null;
+    }
+
     var data = {
-        "locale": req.body["cultureName"],
-        "client": req.body["client"],
-        "userId": req.body["userId"]
+        "locale": postBody["cultureName"],
+        "client": postBody["client"],
+        "userId": postBody["userId"],
+        "items": null
     }
     
-    var encodedItems = req.body["items"];
+    var encodedItems = postBody["items"];
     var items = JSON.parse(encodedItems);
     data.items = items;
 

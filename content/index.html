@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="fh2-app.css" />
     </head>
     <body>
-        <div class="ms-CommandBar">
+        <div class="ms-CommandBar" id="commandBar">
             <div class="ms-CommandBar-sideCommands">
                 <div class="ms-CommandButton ms-CommandButton--noIcon">
                     <button class="ms-CommandButton-button" id="buttonSignIn">
@@ -22,10 +22,30 @@
                 </div>
                 <div class="ms-CommandButton">
                     <button class="ms-CommandButton-button">
-                        <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--CircleRing"></i></span> 
+                        <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Home"></i></span> 
                         <span class="ms-CommandButton-label">Home</span> 
                     </button>
                 </div>
+                <span id="editorActionButtons">
+                    <div class="ms-CommandButton">
+                        <button class="ms-CommandButton-button">
+                            <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Save"></i></span> 
+                            <span class="ms-CommandButton-label">Save</span> 
+                        </button>
+                    </div>
+                    <div class="ms-CommandButton">
+                        <button class="ms-CommandButton-button">
+                            <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Rename"></i></span> 
+                            <span class="ms-CommandButton-label">Rename</span> 
+                        </button>
+                    </div>
+                    <div class="ms-CommandButton">
+                        <button class="ms-CommandButton-button">
+                            <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Share"></i></span> 
+                            <span class="ms-CommandButton-label">Share Link</span> 
+                        </button>
+                    </div>
+                </span>
             </div>
         </div>
 
@@ -34,10 +54,15 @@
             <div class="ms-Grid-col ms-u-lg1">&nbsp;</div>
             <div class="ms-Grid-col ms-u-lg10">
                 <div id="app-loading">
-                    <div class="loader"></div>
+                    <div class="center-loader">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="ms-font-l">Loading...</div>
                 </div>
                 <div id="app-error"></div>
-                <div id="panel-body"></div>
+                <div id="panel-body">
+                    <textarea id="markdownContent" style="width: 100%; height: 80%"></textarea>
+                </div>
                 <div id="panel-default" style="display: none">
                     <h2>Single Page App File Handler</h2>
                     <p>This sample provides an example of an Office 365 File Handler 2.0 implemented using a single page JavaScript application.</p>
