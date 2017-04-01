@@ -40,8 +40,11 @@
     }
 
     function wireUpCommands() {
-        var loginButton = document.getElementById("buttonSignIn");
-        loginButton.onclick = signInButtonClicked;
+        document.getElementById("buttonSignIn").onclick = signInButtonClicked;
+        document.getElementById("saveButton").onclick = saveButtonClicked;
+        document.getElementById("renameButton").onclick = renameButtonClicked;
+        document.getElementById("shareButton").onclick = shareButtonClicked;
+        document.getElementById("closeButton").onclick = closeButtonClicked;
     }
 
     function setLoggedInUser(user) {
@@ -68,22 +71,32 @@
         }
     }
 
+    function saveButtonClicked() {
+
+    }
+
+    function renameButtonClicked() {
+        
+    }
+
+    function shareButtonClicked() {
+
+    }
+
+    function closeButtonClicked() {
+        window.close();
+    }
+
     function loadView(view) {
         var panel = document.getElementById("panel-body");
         var panelDefault = document.getElementById("panel-default");
         var cookieData = getCookie("fileHandlerActivation");
         var activationParameters = JSON.parse(cookieData);
 
-        if (view == "preview")
-        {
-            // Hide the command bar for preview view
-            var commandBar = document.getElementById("commandBar");
-            commandBar.style.display = "none";
-        }
+        configureUxForView(view);
 
         if (view == "preview" || view == "open" || view == "newFile")
         {
-            // panel.innerText = view;
             panelDefault.style.display = "none";
 
             // Launch the markdown previewer
@@ -104,6 +117,21 @@
             panelDefault.style.display = "initial";
             panel.innerText = "";
             finishedLoading();
+        }
+    }
+
+    function configureUxForView(view) {
+        if (view == "preview")
+        {
+            // Hide the command bar for preview view
+            var commandBar = document.getElementById("commandBar");
+            commandBar.style.display = "none";
+        }
+        else if (view == "open" || view == "newfile")
+        {
+            // enable editor commands in toolbar
+            let editorCommands = document.getElementById("editorActionButtons");
+            editorCommands.style.display = "initial";
         }
     }
 
@@ -139,18 +167,24 @@
     }
 
     function loadTextInEditor(text) {
-
-        // enable editor commands in toolbar
-        let editorCommands = document.getElementById("editorActionButtons");
-        editorCommands.style.display = "initial";
-
         let textArea = document.getElementById("markdownContent");
-        textArea.innerText = text;
+        let editor = new SimpleMDE({
+             element: textArea,
+             previewRender: function(plainText) { return convertMarkdownToHtml(plainText); }
+            });
+        editor.value(text);
     }
 
     function loadTextInPreview(text) {
-        let textArea = document.getElementById("markdownContent");
-        textArea.innerText = text;
+        // Load the HTML into body-panel
+        let bodyPanel = document.getElementById("panel-body");
+        bodyPanel.innerHTML = convertMarkdownToHtml(text);
+    }
+
+    function convertMarkdownToHtml(text) {
+        let  converter = new showdown.Converter();
+        converter.setFlavor('github');
+        return converter.makeHtml(text);
     }
 
     function finishedLoading() {

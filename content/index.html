@@ -17,32 +17,32 @@
             <div class="ms-CommandBar-mainArea">
                 <div class="ms-CommandButton">
                     <button class="ms-CommandButton-button" disabled=true>
-                        <span class="ms-CommandButton-label">FHv2 Demo</span> 
-                    </button>
-                </div>
-                <div class="ms-CommandButton">
-                    <button class="ms-CommandButton-button">
-                        <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Home"></i></span> 
-                        <span class="ms-CommandButton-label">Home</span> 
+                        <span class="ms-CommandButton-label">Markdown Editor</span> 
                     </button>
                 </div>
                 <span id="editorActionButtons">
                     <div class="ms-CommandButton">
-                        <button class="ms-CommandButton-button">
+                        <button class="ms-CommandButton-button" id="saveButton">
                             <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Save"></i></span> 
                             <span class="ms-CommandButton-label">Save</span> 
                         </button>
                     </div>
                     <div class="ms-CommandButton">
-                        <button class="ms-CommandButton-button">
+                        <button class="ms-CommandButton-button" id="renameButton">
                             <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Rename"></i></span> 
                             <span class="ms-CommandButton-label">Rename</span> 
                         </button>
                     </div>
                     <div class="ms-CommandButton">
-                        <button class="ms-CommandButton-button">
+                        <button class="ms-CommandButton-button" id="shareButton">
                             <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--Share"></i></span> 
                             <span class="ms-CommandButton-label">Share Link</span> 
+                        </button>
+                    </div>
+                    <div class="ms-CommandButton">
+                        <button class="ms-CommandButton-button" id="closeButton">
+                            <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--ChromeClose"></i></span> 
+                            <span class="ms-CommandButton-label">Close</span> 
                         </button>
                     </div>
                 </span>
@@ -61,7 +61,7 @@
                 </div>
                 <div id="app-error"></div>
                 <div id="panel-body">
-                    <textarea id="markdownContent" style="width: 100%; height: 80%"></textarea>
+                    <textarea id="markdownContent"></textarea>
                 </div>
                 <div id="panel-default" style="display: none">
                     <h2>Single Page App File Handler</h2>
@@ -78,7 +78,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdn.rawgit.com/showdownjs/showdown/1.6.3/dist/showdown.min.js"></script>
     <script src="scripts/graph-js-sdk-web.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>    
     <script src="scripts/fh2-spa.js"></script>
+
     <script type="text/javascript">
     var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
     for (var i = 0; i < CommandButtonElements.length; i++) {
