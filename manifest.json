@@ -1,0 +1,30 @@
+{
+    "id": "E9B5046A-4B26-44E4-850B-423A1F98928E",
+    "type": "FileHandler",
+    "properties": [
+        {
+            "key": "extension",
+            "value": ".md"
+        },
+        {
+            "key": "version",
+            "value": "2"
+        },
+        {
+            "key": "openUrl",
+            "value": "http://localhost:9999/filehandler/open"
+        },
+        {
+            "key": "previewUrl",
+            "value": "http://localhost:9999/filehandler/preview"
+        },
+        {
+            "key": "newFileUrl",
+            "value": "http://localhost:9999/filehandler/preview"
+        },
+        {
+            "key": "fileTypeName",
+            "value": "Markdown Text File"
+        }
+    ]
+}

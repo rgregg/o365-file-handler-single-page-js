@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Markdown File Handler - Single Page App</title>
+        <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.min.css" />
+        <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/css/fabric.components.min.css" />
+        <link rel="stylesheet" href="fh2-app.css" />
+    </head>
+    <body>
+        <div class="ms-CommandBar">
+            <div class="ms-CommandBar-sideCommands">
+                <div class="ms-CommandButton ms-CommandButton--noIcon">
+                    <button class="ms-CommandButton-button" id="buttonSignIn">
+                        <span class="ms-CommandButton-label" id="labelSignIn">Sign in</span> 
+                    </button>
+                </div>
+            </div>
+            <div class="ms-CommandBar-mainArea">
+                <div class="ms-CommandButton">
+                    <button class="ms-CommandButton-button" disabled=true>
+                        <span class="ms-CommandButton-label">FHv2 Demo</span> 
+                    </button>
+                </div>
+                <div class="ms-CommandButton">
+                    <button class="ms-CommandButton-button">
+                        <span class="ms-CommandButton-icon ms-fontColor-themePrimary"><i class="ms-Icon ms-Icon--CircleRing"></i></span> 
+                        <span class="ms-CommandButton-label">Home</span> 
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="ms-Grid"> 
+        <div class="ms-Grid-row">
+            <div class="ms-Grid-col ms-u-lg1">&nbsp;</div>
+            <div class="ms-Grid-col ms-u-lg10">
+                <div id="app-error"></div>
+                <div id="panel-body"></div>
+                <div id="panel-default">
+                    <h2>Single Page App File Handler</h2>
+                    <p>This sample provides an example of an Office 365 File Handler 2.0 implemented using a single page JavaScript application.</p>
+                    <p>The sample uses Office Fabic JS and ADAL.js to handle styles and authentication.</p>
+                </div>
+            </div>
+            <div class="ms-Grid-col ms-u-lg1">&nbsp;</div>
+        </div>
+
+    </body>
+    <script src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/js/fabric.min.js"></script>
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.14/js/adal.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="scripts/fh2-app.js"></script>
+
+    <script type="text/javascript">
+    var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
+    for (var i = 0; i < CommandButtonElements.length; i++) {
+        new fabric['CommandButton'](CommandButtonElements[i]);
+    }
+    </script>
+</html>
