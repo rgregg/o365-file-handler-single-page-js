@@ -33,9 +33,12 @@
         <div class="ms-Grid-row">
             <div class="ms-Grid-col ms-u-lg1">&nbsp;</div>
             <div class="ms-Grid-col ms-u-lg10">
+                <div id="app-loading">
+                    <div class="loader"></div>
+                </div>
                 <div id="app-error"></div>
                 <div id="panel-body"></div>
-                <div id="panel-default">
+                <div id="panel-default" style="display: none">
                     <h2>Single Page App File Handler</h2>
                     <p>This sample provides an example of an Office 365 File Handler 2.0 implemented using a single page JavaScript application.</p>
                     <p>The sample uses Office Fabic JS and ADAL.js to handle styles and authentication.</p>
@@ -48,8 +51,9 @@
     <script src="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.2.0/js/fabric.min.js"></script>
     <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.14/js/adal.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="scripts/fh2-app.js"></script>
-
+    <script src="https://cdn.rawgit.com/showdownjs/showdown/1.6.3/dist/showdown.min.js"></script>
+    <script src="scripts/graph-js-sdk-web.js"></script>
+    <script src="scripts/fh2-spa.js"></script>
     <script type="text/javascript">
     var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
     for (var i = 0; i < CommandButtonElements.length; i++) {
