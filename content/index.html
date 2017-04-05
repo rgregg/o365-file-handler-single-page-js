@@ -64,12 +64,32 @@
                     <textarea id="markdownContent"></textarea>
                 </div>
                 <div id="panel-default" style="display: none">
-                    <h2>Single Page App File Handler</h2>
-                    <p>This sample provides an example of an Office 365 File Handler 2.0 implemented using a single page JavaScript application.</p>
-                    <p>The sample uses Office Fabic JS and ADAL.js to handle styles and authentication.</p>
+                    <h2 class="ms-font-su">Single Page App File Handler</h2>
+                    <p class="ms-font-m">This sample provides an example of an Office 365 File Handler 2.0 implemented using a single page JavaScript application.</p>
+                    <p class="ms-font-m">The sample uses Office Fabic JS and ADAL.js to handle styles and authentication.</p>
                 </div>
             </div>
             <div class="ms-Grid-col ms-u-lg1">&nbsp;</div>
+        </div>
+
+        <div class="dialog-rename-file">
+            <div class="ms-Dialog ms-Dialog--close">
+                <button class="ms-Dialog-button ms-Dialog-buttonClose">
+                    <i class="ms-Icon ms-Icon--Cancel"></i>
+                </button>            
+                <div class="ms-Dialog-title">Rename</div>
+                <div class="ms-Dialog-content">
+                    <div class="ms-TextField">
+                        <label class="ms-Label">Name</label>
+                        <input class="ms-TextField-field" type="text" value="" placeholder="">
+                    </div>
+                </div>
+                <div class="ms-Dialog-actions">
+                <button class="ms-Button ms-Dialog-action ms-Button--primary">
+                    <span class="ms-Button-label">Save</span> 
+                </button>
+                </div>
+            </div>
         </div>
 
     </body>
@@ -87,5 +107,28 @@
     for (var i = 0; i < CommandButtonElements.length; i++) {
         new fabric['CommandButton'](CommandButtonElements[i]);
     }
+    </script>
+    
+    <script type="text/javascript">
+    (function() {
+        var outerDialog = document.querySelector(".dialog-rename-file");
+        var dialog = outerDialog.querySelector(".ms-Dialog");
+        var textBoxElements = outerDialog.querySelectorAll(".ms-TextField");
+        var actionButtonElements = outerDialog.querySelectorAll(".ms-Dialog-action");
+        var actionButtonComponents = [];
+        // Wire up the dialog
+        window.renameDialog  = new fabric['Dialog'](dialog);
+        // Wire up the textBox
+        new fabric['TextField'](textBoxElements[0]);
+        // Wire up the buttons
+        for (var i = 0; i < actionButtonElements.length; i++) {
+            actionButtonComponents[i] = new fabric['Button'](actionButtonElements[i], actionHandler);
+        }
+
+        function actionHandler(event) {
+            var newFilename = textBoxElements[0].querySelector('.ms-TextField-field').value;
+            dialog.saveAction(newFilename);
+        }
+    }());
     </script>
 </html>

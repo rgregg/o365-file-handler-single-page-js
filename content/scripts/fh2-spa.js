@@ -1,4 +1,31 @@
 (function() {
+
+    // Wire up FabicJS controls
+    var CommandButtonElements = document.querySelectorAll(".ms-CommandButton");
+    for (var i = 0; i < CommandButtonElements.length; i++) {
+        new fabric['CommandButton'](CommandButtonElements[i]);
+    }
+
+    var outerDialog = document.querySelector(".dialog-rename-file");
+    var dialog = outerDialog.querySelector(".ms-Dialog");
+    var textBoxElements = outerDialog.querySelectorAll(".ms-TextField");
+    var actionButtonElements = outerDialog.querySelectorAll(".ms-Dialog-action");
+    var actionButtonComponents = [];
+    // Wire up the dialog
+    window.renameDialog  = new fabric['Dialog'](dialog);
+    // Wire up the textBox
+    new fabric['TextField'](textBoxElements[0]);
+    // Wire up the buttons
+    for (var i = 0; i < actionButtonElements.length; i++) {
+        actionButtonComponents[i] = new fabric['Button'](actionButtonElements[i], actionHandler);
+    }
+
+    function actionHandler(event) {
+        var newFilename = textBoxElements[0].querySelector('.ms-TextField-field').value;
+        dialog.saveAction(newFilename);
+    }
+
+    // setup ADAL.js
     window.config = {
         instance: 'https://login.microsoftonline.com/',
         tenant: 'common',
@@ -36,7 +63,7 @@
     }
     else
     {
-        loadView(null);
+        loadView("");
     }
 
     function wireUpCommands() {
@@ -76,7 +103,16 @@
     }
 
     function renameButtonClicked() {
-        
+        var filename = window.openedFile.name;
+
+        var fields = window.renameDialog._dialog.querySelectorAll('.ms-TextField-field');
+        fields[0].value = filename;
+
+        window.renameDialog.saveAction = function(newName) {
+            window.alert("rename to " + newName);
+        };
+
+        window.renameDialog.open();
     }
 
     function shareButtonClicked() {
@@ -90,14 +126,15 @@
     function loadView(view) {
         var panel = document.getElementById("panel-body");
         var panelDefault = document.getElementById("panel-default");
-        var cookieData = getCookie("fileHandlerActivation");
-        var activationParameters = JSON.parse(cookieData);
 
         configureUxForView(view);
 
         if (view == "preview" || view == "open" || view == "newFile")
         {
             panelDefault.style.display = "none";
+
+            var cookieData = getCookie("fileHandlerActivation");
+            var activationParameters = JSON.parse(cookieData);
 
             // Launch the markdown previewer
             fetchFileFromMSGraph(activationParameters, view, function(view, text) {
@@ -147,6 +184,7 @@
 
         var itemUrl = activationParameters.items[0];
         client.api(itemUrl).get().then((res) => {
+            window.openedFile = res;
             var downloadUrl = res["@microsoft.graph.downloadUrl"];
             client.api(downloadUrl).getStream((err, req) => {
                 // remove custom headers since it causes CORS issues and isn't required
